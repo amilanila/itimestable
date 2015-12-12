@@ -3,6 +3,10 @@ angular.module('starter.services', [])
 .factory('Practice', function() {
   practice = {};
   practice.counter;
+  practice.multiplier = 1;
+  practice.answerPool = [];
+  practice.answerCorrect;
+
   practice.setCounter = function(counter) {
     practice.counter = counter;
   } 
@@ -11,50 +15,28 @@ angular.module('starter.services', [])
     return practice.counter;
   }
 
+  practice.setAnswerPool = function() {
+    // set answer pool
+    practice.answerPool = [];
+    for (var i = 1; i <= 4; i++) {
+      practice.answerPool.push(practice.counter * i); 
+    }; 
+
+    // set correct answer
+    practice.answerCorrect = practice.counter * practice.multiplier;
+  }
+
+  practice.getAnswerPool = function() {
+    return practice.answerPool;
+  }
+  
+  practice.getAnswerCorrect = function() {
+    return practice.answerCorrect;
+  }
+
+  practice.getMultiplier = function() {
+    return practice.multiplier;
+  }
+  
   return practice;
-
-  // // Some fake testing data
-  // var chats = [{
-  //   id: 0,
-  //   name: 'Ben Sparrow',
-  //   lastText: 'You on your way?',
-  //   face: 'img/ben.png'
-  // }, {
-  //   id: 1,
-  //   name: 'Max Lynx',
-  //   lastText: 'Hey, it\'s me',
-  //   face: 'img/max.png'
-  // }, {
-  //   id: 2,
-  //   name: 'Adam Bradleyson',
-  //   lastText: 'I should buy a boat',
-  //   face: 'img/adam.jpg'
-  // }, {
-  //   id: 3,
-  //   name: 'Perry Governor',
-  //   lastText: 'Look at my mukluks!',
-  //   face: 'img/perry.png'
-  // }, {
-  //   id: 4,
-  //   name: 'Mike Harrington',
-  //   lastText: 'This is wicked good ice cream.',
-  //   face: 'img/mike.png'
-  // }];
-
-  // return {
-  //   all: function() {
-  //     return chats;
-  //   },
-  //   remove: function(chat) {
-  //     chats.splice(chats.indexOf(chat), 1);
-  //   },
-  //   get: function(chatId) {
-  //     for (var i = 0; i < chats.length; i++) {
-  //       if (chats[i].id === parseInt(chatId)) {
-  //         return chats[i];
-  //       }
-  //     }
-  //     return null;
-  //   }
-  // };
 });

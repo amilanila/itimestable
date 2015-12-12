@@ -1,8 +1,20 @@
 /* Empty. Add your own CSS if you like */
-.button.button-small.button-counter {
+.button-counter {
 	width: 50px; 
 }
 
-.times-table .button-outline{
+.button-practice-ques {
+	width: 50px; 
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.button-practice-ans {
+	height: 75px;
+	width: 75px;
+}
+
+.times-table .button-outline {
 	width: 100%;
 }	
+

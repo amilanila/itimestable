@@ -24,6 +24,7 @@ angular.module('starter.controllers', [])
 
   $scope.practice = function(counter) {
     Practice.setCounter(counter);
+    Practice.setAnswerPool();
     $state.go('tab.chats');
   };
 })
@@ -37,7 +38,17 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.counter = Practice.getCounter();
+  $scope.counter = Practice.getCounter() != undefined ? Practice.getCounter() : 1;  
+  $scope.multipliee = Practice.getMultiplier();
+  $scope.answerPool = Practice.getAnswerPool();  
+  $scope.answerCorrect = Practice.getAnswerCorrect();
+  $scope.correct = false;
+
+  $scope.tryAnswer = function(ans, ansCorrect) {
+    if(ans == ansCorrect){
+      $scope.correct = true;
+    } 
+  }
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {

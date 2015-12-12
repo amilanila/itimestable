@@ -1,17 +1,29 @@
 <ion-view view-title="Practice">
   <ion-content>
-    {{counter}}
-    <!-- <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list> -->
+    <div class="row">
+      <h4>Question<h4>
+    </div>
+    <div class="row">
+      <button class="button button-outline button-calm button-practice-ques"><h3>{{counter}}</h3></button>
+      <h2> x </h2>
+      <button class="button button-outline button-calm button-practice-ques"><h3>{{multipliee}}</h3></button>  
+    </div>
+    <hr>
+    <div class="row">      
+      <h4>Select answer</h4>
+    </div>
+    <div class="row">
+      <div class="col" ng-repeat="ans in answerPool">
+        <button class="button button-small button-counter button-energized button-practice-ans" ng-click="tryAnswer(ans, answerCorrect)"><h2>{{ans}}</h2></button>        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button ng-show="correct" ng-class="correct ? ans-correct : ans-wrong">Z</button>
+      </div>      
+    </div>
+    <div class="row">
+      <button class="button button-full button-balanced ng-hide" ng-show="correct">Next</button>
+    </div>
   </ion-content>
 </ion-view>
