@@ -1,6 +1,20 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {})
+.controller('DashCtrl', function($scope) {  
+  $scope.showTable = function(counter){
+    if($scope.counter != counter){
+      $scope.tableVisible = false;
+    }
+
+    $scope.counter = counter;
+    
+    if($scope.tableVisible === undefined || $scope.tableVisible == false){
+      $scope.tableVisible = true;
+    } else {
+      $scope.tableVisible = false;
+    }
+  }
+})
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

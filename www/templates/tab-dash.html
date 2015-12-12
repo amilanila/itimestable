@@ -1,28 +1,40 @@
-<ion-view view-title="Dashboard">
+<ion-view view-title="Times Table">
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
+    <div class="row">
+      <div class="col" ng-click="showTable(1)"><button class="button button-small button-counter button-positive"><h2>1<h2></button></div>
+      <div class="col" ng-click="showTable(2)"><button class="button button-small button-counter button-balanced"><h2>2<h2></button></div>
+      <div class="col" ng-click="showTable(3)"><button class="button button-small button-counter button-energized"><h2>3<h2></button></div>
+      <div class="col" ng-click="showTable(4)"><button class="button button-small button-counter button-assertive"><h2>4<h2></button></div>
+      <div class="col" ng-click="showTable(5)"><button class="button button-small button-counter button-royal"><h2>5<h2></button></div>
+      <div class="col" ng-click="showTable(6)"><button class="button button-small button-counter button-calm"><h2>6<h2></button></div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
+    <div class="row">
+      <div class="col" ng-click="showTable(7)"><button class="button button-small button-counter button-assertive"><h2>7<h2></button></div>
+      <div class="col" ng-click="showTable(8)"><button class="button button-small button-counter button-royal"><h2>8<h2></button></div>
+      <div class="col" ng-click="showTable(9)"><button class="button button-small button-counter button-calm"><h2>9<h2></button></div>
+      <div class="col" ng-click="showTable(10)"><button class="button button-small button-counter button-positive"><h2>10<h2></button></div>
+      <div class="col" ng-click="showTable(11)"><button class="button button-small button-counter button-balanced"><h2>11<h2></button></div>
+      <div class="col" ng-click="showTable(12)"><button class="button button-small button-counter button-energized"><h2>12<h2></button></div>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
+    <div class="row">
+      <div class="col">
+        <div class="list">
+          <div class="item item-body ng-hide" ng-show="tableVisible">        
+            <div>{{counter}} x 1 = {{counter * 1}}</div>
+            <div>{{counter}} x 2 = {{counter * 2}}</div>
+            <div>{{counter}} x 3 = {{counter * 3}}</div>
+            <div>{{counter}} x 4 = {{counter * 4}}</div>
+            <div>{{counter}} x 5 = {{counter * 5}}</div>
+            <div>{{counter}} x 6 = {{counter * 6}}</div>
+            <div>{{counter}} x 7 = {{counter * 7}}</div>
+            <div>{{counter}} x 8 = {{counter * 8}}</div>
+            <div>{{counter}} x 9 = {{counter * 9}}</div>
+            <div>{{counter}} x 10 = {{counter * 10}}</div>
+            <div>{{counter}} x 11 = {{counter * 11}}</div>
+            <div>{{counter}} x 12 = {{counter * 12}}</div>
+          </div>
+        </div>    
+      </div>      
     </div>
   </ion-content>
 </ion-view>
