@@ -1,22 +1,34 @@
 angular.module('starter.controllers', [])
 
-.controller('DashCtrl', function($scope) {  
-  $scope.showTable = function(counter){
-    if($scope.counter != counter){
+.controller('DashCtrl', function($scope, $state, Practice) {  
+
+  // define counters of times table
+  $scope.firstRowCounters = {1:'positive', 2:'calm', 3:'balanced', 4:'energized', 5:'assertive', 6:'royal'};
+  $scope.secondRowCounters = {7:'assertive', 8:'royal', 9:'positive', 10:'calm', 11:'energized', 12:'balanced'};
+
+  // show times table for give counter
+  $scope.showTable = function(counter, counterColor) {
+    if($scope.counter != counter) {
       $scope.tableVisible = false;
     }
 
     $scope.counter = counter;
+    $scope.counterColor = counterColor; 
     
-    if($scope.tableVisible === undefined || $scope.tableVisible == false){
+    if($scope.tableVisible === undefined || $scope.tableVisible == false) {
       $scope.tableVisible = true;
     } else {
       $scope.tableVisible = false;
     }
-  }
+  };
+
+  $scope.practice = function(counter) {
+    Practice.setCounter(counter);
+    $state.go('tab.chats');
+  };
 })
 
-.controller('ChatsCtrl', function($scope, Chats) {
+.controller('ChatsCtrl', function($scope, Practice) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -25,10 +37,7 @@ angular.module('starter.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
+  $scope.counter = Practice.getCounter();
 })
 
 .controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
