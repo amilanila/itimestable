@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ChatsCtrl', function($scope, Practice) {
+.controller('ChatsCtrl', function($scope, $state, Practice) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -44,14 +44,25 @@ angular.module('starter.controllers', [])
   $scope.answerCorrect = Practice.getAnswerCorrect();
   $scope.answerText = 'Select correct answer';
   $scope.correct = 0;
+  $scope.answeredCorrect = false;
 
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
       $scope.correct = 1;
       $scope.answerText = 'Next';
+      $scope.answeredCorrect = true;
     } else {
       $scope.correct = -1;
       $scope.answerText = 'Try again';
+      $scope.answeredCorrect = false;
+    }
+  }
+
+  $scope.nextQuestion = function() {
+    if($scope.answeredCorrect) {
+      Practice.setNextQuestion();
+      Practice.setAnswerPool();
+      $state.go($state.current, {}, {reload: true});  
     }
   }
 })

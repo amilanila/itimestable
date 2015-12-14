@@ -29,7 +29,7 @@ angular.module('starter.services', [])
     practice.answerPool.push(practice.answerCorrect);
 
     $.each(practice.multipliees, function(i, val){
-        if(val != practice.multipliee){
+        if(val != practice.questionIndex){
             practice.answerPool.push(parseInt(practice.counter) * parseInt(val));
             if(practice.answerPool.length == 4){
                 return false;
@@ -50,5 +50,12 @@ angular.module('starter.services', [])
     return practice.questionIndex;
   } 
   
+  practice.setNextQuestion = function() {
+    if(practice.questionIndex == 12){
+      return;
+    }
+    ++practice.questionIndex;
+  }
+
   return practice;
 });
