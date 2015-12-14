@@ -2,11 +2,19 @@ angular.module('starter.services', [])
 
 .factory('Practice', function() {
   practice = {};
-  practice.counter;
-  practice.multiplier = 1;
-  practice.answerPool = [];
-  practice.answerCorrect;
+  practice.counter;  
+  practice.questionIndex = 1;
+  
+  practice.shuffle = function(o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  }
 
+  practice.multipliees = practice.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
+  practice.multipliee = practice.multipliees[practice.questionIndex];
+  practice.answerPool = [];
+  practice.answerCorrect;  
+  
   practice.setCounter = function(counter) {
     practice.counter = counter;
   } 
@@ -16,18 +24,22 @@ angular.module('starter.services', [])
   }
 
   practice.setAnswerPool = function() {
-    // set answer pool
     practice.answerPool = [];
-    for (var i = 1; i <= 4; i++) {
-      practice.answerPool.push(practice.counter * i); 
-    }; 
+    practice.answerCorrect = parseInt(practice.counter) * parseInt(practice.questionIndex);
+    practice.answerPool.push(practice.answerCorrect);
 
-    // set correct answer
-    practice.answerCorrect = practice.counter * practice.multiplier;
+    $.each(practice.multipliees, function(i, val){
+        if(val != practice.multipliee){
+            practice.answerPool.push(parseInt(practice.counter) * parseInt(val));
+            if(practice.answerPool.length == 4){
+                return false;
+            }
+        }        
+    });    
   }
 
   practice.getAnswerPool = function() {
-    return practice.answerPool;
+    return practice.shuffle(practice.answerPool);    
   }
   
   practice.getAnswerCorrect = function() {
@@ -35,8 +47,8 @@ angular.module('starter.services', [])
   }
 
   practice.getMultiplier = function() {
-    return practice.multiplier;
-  }
+    return practice.questionIndex;
+  } 
   
   return practice;
 });
