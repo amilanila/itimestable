@@ -48,7 +48,7 @@ angular.module('starter.controllers', [])
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
       $scope.correct = 1;
-      $scope.answerText = 'NEXT';
+      $scope.answerText = 'Next';
     } else {
       $scope.correct = -1;
       $scope.answerText = 'Try again';

@@ -18,10 +18,11 @@
       </div>
     </div>
     <div class="row">
-      <div></div>
-      <button ng-class="{'button icon-left ion-checkmark-round button-balanced': correct == 1, 
-                         'button icon-left ion-close-round button-assertive': correct == -1, 
-                         'button': correct == 0}" style="vertical-align: middle">{{answerText}}</button>
+      <div class="col-50 col-offset-25">
+        <button ng-class="{'button icon-left ion-checkmark-round button-balanced button-ans': correct == 1, 
+                           'button icon-left ion-close-round button-assertive button-ans': correct == -1, 
+                           'button button-ans': correct == 0}">{{answerText}}</button>        
+      </div>
     </div>
   </ion-content>
 </ion-view>
