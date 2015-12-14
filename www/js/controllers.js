@@ -42,12 +42,17 @@ angular.module('starter.controllers', [])
   $scope.multipliee = Practice.getMultiplier();
   $scope.answerPool = Practice.getAnswerPool();  
   $scope.answerCorrect = Practice.getAnswerCorrect();
-  $scope.correct = false;
+  $scope.answerText = 'Select correct answer';
+  $scope.correct = 0;
 
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
-      $scope.correct = true;
-    } 
+      $scope.correct = 1;
+      $scope.answerText = 'NEXT';
+    } else {
+      $scope.correct = -1;
+      $scope.answerText = 'Try again';
+    }
   }
 })
 

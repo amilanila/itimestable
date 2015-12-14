@@ -14,16 +14,14 @@
     </div>
     <div class="row">
       <div class="col" ng-repeat="ans in answerPool">
-        <button class="button button-small button-counter button-energized button-practice-ans" ng-click="tryAnswer(ans, answerCorrect)"><h2>{{ans}}</h2></button>        
+        <button class="button button-small button-counter button-energized button-practice-ans" ng-click="tryAnswer(ans, answerCorrect)"><h2>{{ans}}</h2></button>
       </div>
     </div>
     <div class="row">
-      <div class="col">
-        <button ng-show="correct" ng-class="correct ? ans-correct : ans-wrong">Z</button>
-      </div>      
-    </div>
-    <div class="row">
-      <button class="button button-full button-balanced ng-hide" ng-show="correct">Next</button>
+      <div></div>
+      <button ng-class="{'button icon-left ion-checkmark-round button-balanced': correct == 1, 
+                         'button icon-left ion-close-round button-assertive': correct == -1, 
+                         'button': correct == 0}" style="vertical-align: middle">{{answerText}}</button>
     </div>
   </ion-content>
 </ion-view>
