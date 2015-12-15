@@ -13,8 +13,9 @@ angular.module('starter.services', [])
   practice.multipliees = practice.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
   practice.multipliee = practice.multipliees[practice.questionIndex];
   practice.answerPool = [];
-  practice.answerCorrect;  
-  
+  practice.answerCorrect;
+  practice.currentLastCounter = false;  
+
   practice.setCounter = function(counter) {
     practice.counter = counter;
   } 
@@ -51,11 +52,34 @@ angular.module('starter.services', [])
   } 
   
   practice.setNextQuestion = function() {
-    if(practice.questionIndex == 12){
+    if(practice.questionIndex == 12){      
       return;
     }
+
+    if(practice.questionIndex == 11) {
+      practice.currentLastCounter = true;
+    }
+
     ++practice.questionIndex;
   }
 
+  practice.resetQuestionIndex = function() {
+    practice.questionIndex =1;
+  }
+
+  practice.isCurrentLastCounter = function() {
+    return practice.currentLastCounter;
+  }
+
+  practice.resetCurrentLastCounter = function() {
+    practice.currentLastCounter = false;
+  }
+
+  practice.reset = function(counter) {
+    practice.setCounter(counter);
+    practice.resetQuestionIndex();
+    practice.resetCurrentLastCounter();
+    practice.setAnswerPool();    
+  }
   return practice;
 });

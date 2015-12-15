@@ -23,8 +23,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.practice = function(counter) {
-    Practice.setCounter(counter);
-    Practice.setAnswerPool();
+    Practice.reset(counter);
     $state.go('tab.chats');
   };
 })
@@ -45,13 +44,17 @@ angular.module('starter.controllers', [])
   $scope.answerText = 'Select correct answer';
   $scope.correct = 0;
   $scope.answeredCorrect = false;
+  $scope.currentLastCounter = Practice.isCurrentLastCounter();
+  $scope.allCorrectForCurrentMultipler = false;
 
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
       $scope.correct = 1;
-      $scope.answerText = 'Next';
+      $scope.answerText = $scope.currentLastCounter ? 'Well Done' : 'Next';
+      $scope.allCorrectForCurrentMultipler = $scope.currentLastCounter ? true : false;
       $scope.answeredCorrect = true;
     } else {
+      $scope.allCorrectForCurrentMultipler = false;
       $scope.correct = -1;
       $scope.answerText = 'Try again';
       $scope.answeredCorrect = false;
@@ -60,10 +63,18 @@ angular.module('starter.controllers', [])
 
   $scope.nextQuestion = function() {
     if($scope.answeredCorrect) {
+      if($scope.currentLastCounter) {
+        return;
+      }
       Practice.setNextQuestion();
       Practice.setAnswerPool();
       $state.go($state.current, {}, {reload: true});  
     }
+  }
+
+  $scope.startNextMultiplier = function() {
+    Practice.reset(parseInt(Practice.getCounter()) + 1);
+    $state.go($state.current, {}, {reload: true});  
   }
 })
 

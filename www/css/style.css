@@ -17,6 +17,12 @@
 .button-ans {
 	width: 200px;
 }
+
+.button-next-multiplier {
+	width: 200px;	
+	margin-top: 10px;
+}
+
 .times-table .button-outline {
 	width: 100%;
 }	
