@@ -46,11 +46,21 @@ angular.module('starter.controllers', [])
   $scope.answeredCorrect = false;
   $scope.currentLastCounter = Practice.isCurrentLastCounter();
   $scope.allCorrectForCurrentMultipler = false;
+  $scope.isFinishTimetable = false;
 
   $scope.tryAnswer = function(ans, ansCorrect) {
+    $scope.isFinishTimetable = false;
+
     if(ans == ansCorrect){
       $scope.correct = 1;
       $scope.answerText = $scope.currentLastCounter ? 'Well Done' : 'Next';
+
+      // if timestable is finish override the message with congratulations
+      if($scope.counter == 12 && $scope.currentLastCounter) {
+        $scope.answerText = 'Congratulations!';
+        $scope.isFinishTimetable = true;
+      }
+
       $scope.allCorrectForCurrentMultipler = $scope.currentLastCounter ? true : false;
       $scope.answeredCorrect = true;
     } else {

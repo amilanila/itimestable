@@ -26,7 +26,7 @@
     </div>
     <div class="row">
       <div class="col-50 col-offset-25">        
-        <button ng-show="allCorrectForCurrentMultipler" class="button button-calm button-next-multiplier" ng-click="startNextMultiplier()">Go to next multiplier</button>
+        <button ng-show="allCorrectForCurrentMultipler && !isFinishTimetable" class="button button-calm button-next-multiplier" ng-click="startNextMultiplier()">Go to next multiplier</button>
       </div>
     </div>
   </ion-content>
