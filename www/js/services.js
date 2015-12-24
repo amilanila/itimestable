@@ -84,15 +84,6 @@ angular.module('starter.services', [])
   return practice;
 })
 
-.factory('Profile', function() {
-  profile = {};
-  profile.name = 'amila';
-  profile.level;
-  profile.score;
-
-  return profile;
-})
-
 .factory('Quis', function() {
   quis = {};
   quis.multiplier = 1;
@@ -146,4 +137,49 @@ angular.module('starter.services', [])
   }
 
   return game;
+})
+
+.factory('Question', function() {
+  question = {};
+  question.multiplier = 0;
+  question.correctAnswer;
+  question.answerPool = [];
+  
+  question.shuffle = function(o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  }
+  
+  question.counters = question.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
+
+  question.getNextQuestion = function(index) {
+    var currentMultiplier = ++question.multiplier;
+    question.correctAnswer = parseInt(currentMultiplier) * parseInt(question.counters[index]);
+    question.answerPool.push(question.correctAnswer);
+
+    $.each(question.counters, function(i, val){
+      question.answerPool.push(parseInt(currentMultiplier) * parseInt(val));
+    });
+  }
+
+  return question;
+})
+
+.factory('Pool', function(Question) {
+  pool = {};
+  pool.questions = [];
+
+  pool.addQuestion = function() {
+    for (var i = 1; i < 4; i++) {
+      var q = Question.getNextQuestion(i);
+      pool.questions.push(q);
+    };    
+  }
+
+  pool.getQuestions = function() {
+    pool.addQuestion();
+    return pool.questions;
+  }
+
+  return pool;
 });
