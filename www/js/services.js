@@ -100,17 +100,20 @@ angular.module('starter.services', [])
   quis.correctAnswer;
   quis.answerPool;
 
+  quis.levels = [1, 2, 3, 4];
+  quis.levels[0] = [1, 2, 3];
+  quis.levels[1] = [4, 5, 6];
+  quis.levels[2] = [10, 11, 12];
+  quis.levels[3] = [7, 8, 9]; 
+  quis.currentLevel = 1; 
+  quis.currentQuisIndex = 1;
+
   return quis;  
 })
 
 .factory('Game', function(Quis){
   game = {};
-
   game.quis = Quis;
-  game.level1 = [1, 2, 3];
-  game.level2 = [4, 5, 6];
-  game.level3 = [7, 8, 9];
-  game.level4 = [10, 11, 12];
 
   game.shuffle = function(o) {
     for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -120,17 +123,26 @@ angular.module('starter.services', [])
   game.counters = game.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
   game.roundQuesIndex = 1;
 
-  game.getGameQuestions = function() {    
+  game.generateGameQuestion = function(level) {    
     game.quis.answerPool = [];
-    game.quis.correctAnswer = parseInt(game.quis.multiplier) * parseInt(game.quis.multipliee);
+    game.currentLevelMultiplers = game.shuffle(game.quis.levels[level]);
+    game.multiplier = game.currentLevelMultiplers[0];
+
+    game.quis.correctAnswer = parseInt(game.multiplier) * parseInt(game.quis.multipliee);
     game.quis.answerPool.push(game.quis.correctAnswer);
-    
+
     $.each(game.counters, function(i, val){
-      game.quis.answerPool.push(parseInt(game.quis.multiplier) * parseInt(val));
+      game.quis.answerPool.push(parseInt(game.multiplier) * parseInt(val));
       if(game.quis.answerPool.length == 8){
           return false;
       }
-    });       
+    });    
+    game.shuffle(game.quis.answerPool);   
+  }
+
+  game.getQuis = function(level) {
+    game.generateGameQuestion(level);
+    return game.quis;
   }
 
   return game;

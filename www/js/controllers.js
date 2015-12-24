@@ -95,7 +95,6 @@ angular.module('starter.controllers', [])
 .controller('AccountCtrl', function($scope, Profile, Game) {
 
   $scope.getGameQuestions = function() {
-    Game.getGameQuestions();
-    $scope.quis = Game.quis;
+    $scope.quis = Game.getQuis(1);
   }
 });
