@@ -142,7 +142,6 @@ angular.module('starter.services', [])
 .factory('Question', function() {
   question = {};
   question.multiplier = 0;
-  question.correctAnswer;
   question.answerPool = [];
   
   question.shuffle = function(o) {
@@ -154,12 +153,17 @@ angular.module('starter.services', [])
 
   question.getNextQuestion = function(index) {
     var currentMultiplier = ++question.multiplier;
-    question.correctAnswer = parseInt(currentMultiplier) * parseInt(question.counters[index]);
+    var currentCounter = parseInt(question.counters[index]);
+
+    question.correctAnswer = parseInt(currentMultiplier) * parseInt(currentCounter);
+    question.currentCounter = currentCounter;
+
     question.answerPool.push(question.correctAnswer);
 
     $.each(question.counters, function(i, val){
       question.answerPool.push(parseInt(currentMultiplier) * parseInt(val));
     });
+    return question;
   }
 
   return question;
@@ -168,12 +172,13 @@ angular.module('starter.services', [])
 .factory('Pool', function(Question) {
   pool = {};
   pool.questions = [];
+  pool.questionNumber = 1;
 
   pool.addQuestion = function() {
-    for (var i = 1; i < 4; i++) {
-      var q = Question.getNextQuestion(i);
+    //for (var i = 1; i < 4; i++) {
+      var q = Question.getNextQuestion(pool.questionNumber++);
       pool.questions.push(q);
-    };    
+    //};    
   }
 
   pool.getQuestions = function() {

@@ -3,7 +3,7 @@
   	<div class="row">
  	  <div class="col">
  	  	<button class="button button-full" ng-click="getQuestions()">Start</button>
- 	  	{{questions}}
+ 	  	{{questions[0].multiplier}} * {{questions[0].currentCounter}} = {{questions[0].correctAnswer}}
  	  </div>  	
   	</div>
   </ion-content>
