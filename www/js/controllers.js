@@ -93,11 +93,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AccountCtrl', function($scope, Pool) {
-
-  // $scope.getGameQuestions = function() {
-  //   $scope.quis = Game.getQuis(1);
-  // }
-
   $scope.getQuestions = function() {
     $scope.questions = Pool.getQuestions();
   }

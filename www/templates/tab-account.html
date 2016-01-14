@@ -3,7 +3,13 @@
   	<div class="row">
  	  <div class="col">
  	  	<button class="button button-full" ng-click="getQuestions()">Start</button>
- 	  	{{questions[0].multiplier}} * {{questions[0].currentCounter}} = {{questions[0].correctAnswer}}
+ 	  	<div ng-repeat="quiz in questions track by $index">
+ 	  		{{quiz.multiplier}} * {{quiz.currentCounter}} = {{quiz.correctAnswer}}<br/>
+ 	  		<div ng-repeat="ans in quiz.answerPool track by $index">
+ 	  			{{ans}},
+ 	  		</div>
+ 	  		{{}}
+ 	  	</div> 	  	
  	  </div>  	
   	</div>
   </ion-content>

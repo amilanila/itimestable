@@ -161,7 +161,10 @@ angular.module('starter.services', [])
     question.answerPool.push(question.correctAnswer);
 
     $.each(question.counters, function(i, val){
-      question.answerPool.push(parseInt(currentMultiplier) * parseInt(val));
+      var possibleAnswer = parseInt(currentMultiplier) * parseInt(val);
+      if(possibleAnswer != question.correctAnswer){
+        question.answerPool.push(possibleAnswer);  
+      }      
     });
     return question;
   }
@@ -175,13 +178,11 @@ angular.module('starter.services', [])
   pool.questionNumber = 1;
 
   pool.addQuestion = function() {
-    //for (var i = 1; i < 4; i++) {
       var q = Question.getNextQuestion(pool.questionNumber++);
       pool.questions.push(q);
-    //};    
   }
 
-  pool.getQuestions = function() {
+  pool.getQuestions = function() {    
     pool.addQuestion();
     return pool.questions;
   }
