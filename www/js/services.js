@@ -141,7 +141,6 @@ angular.module('starter.services', [])
 
 .factory('Question', function() {
   question = {};
-  question.multiplier = 0;
   question.answerPool = [];
   
   question.shuffle = function(o) {
@@ -151,17 +150,21 @@ angular.module('starter.services', [])
   
   question.counters = question.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
 
+  question.getRandomCounter = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   question.getNextQuestion = function(index) {
-    var currentMultiplier = ++question.multiplier;
+    question.multiplier = question.getRandomCounter(1, 12);
     var currentCounter = parseInt(question.counters[index]);
 
-    question.correctAnswer = parseInt(currentMultiplier) * parseInt(currentCounter);
+    question.correctAnswer = parseInt(question.multiplier) * parseInt(currentCounter);
     question.currentCounter = currentCounter;
 
     question.answerPool.push(question.correctAnswer);
 
     $.each(question.counters, function(i, val){
-      var possibleAnswer = parseInt(currentMultiplier) * parseInt(val);
+      var possibleAnswer = parseInt(question.multiplier) * parseInt(val);
       if(possibleAnswer != question.correctAnswer){
         question.answerPool.push(possibleAnswer);  
       }      
@@ -177,9 +180,14 @@ angular.module('starter.services', [])
   pool.questions = [];
   pool.questionNumber = 1;
 
+  pool.getRandomCounter = function(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   pool.addQuestion = function() {
-      var q = Question.getNextQuestion(pool.questionNumber++);
-      pool.questions.push(q);
+    var counter = pool.getRandomCounter(1, 12);
+    var q = Question.getNextQuestion(counter);
+    pool.questions.push(q);
   }
 
   pool.getQuestions = function() {    
