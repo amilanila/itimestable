@@ -148,19 +148,19 @@ angular.module('starter.services', [])
     return o;
   }
   
-  question.counters = question.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
-
   question.getRandomCounter = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   question.getNextQuestion = function(index) {
+    question.counters = question.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
     question.multiplier = question.getRandomCounter(1, 12);
     var currentCounter = parseInt(question.counters[index]);
 
     question.correctAnswer = parseInt(question.multiplier) * parseInt(currentCounter);
     question.currentCounter = currentCounter;
 
+    question.answerPool = [];
     question.answerPool.push(question.correctAnswer);
 
     $.each(question.counters, function(i, val){
@@ -169,6 +169,7 @@ angular.module('starter.services', [])
         question.answerPool.push(possibleAnswer);  
       }      
     });
+    question.answerPool = question.shuffle(question.answerPool);
     return question;
   }
 
@@ -185,9 +186,17 @@ angular.module('starter.services', [])
   }
 
   pool.addQuestion = function() {
+    // reset questions
+    pool.resetQuestions();
+
+    // add a question
     var counter = pool.getRandomCounter(1, 12);
     var q = Question.getNextQuestion(counter);
     pool.questions.push(q);
+  }
+
+  pool.resetQuestions = function() {
+    pool.questions = [];
   }
 
   pool.getQuestions = function() {    
