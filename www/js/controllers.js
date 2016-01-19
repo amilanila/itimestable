@@ -92,9 +92,10 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, Pool) {
+.controller('AccountCtrl', function($scope, Pool, Level) {
+  $scope.levels = Level.getLevels();
+  
   $scope.getQuestions = function() {
-    $scope.questions = Pool.getQuestions();
+    $scope.questions = Pool.getQuestions();    
   }
-
 });

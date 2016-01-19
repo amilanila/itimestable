@@ -102,46 +102,10 @@ angular.module('starter.services', [])
   return quis;  
 })
 
-.factory('Game', function(Quis){
-  game = {};
-  game.quis = Quis;
-
-  game.shuffle = function(o) {
-    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
-    return o;
-  }
-
-  game.counters = game.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
-  game.roundQuesIndex = 1;
-
-  game.generateGameQuestion = function(level) {    
-    game.quis.answerPool = [];
-    game.currentLevelMultiplers = game.shuffle(game.quis.levels[level]);
-    game.multiplier = game.currentLevelMultiplers[0];
-
-    game.quis.correctAnswer = parseInt(game.multiplier) * parseInt(game.quis.multipliee);
-    game.quis.answerPool.push(game.quis.correctAnswer);
-
-    $.each(game.counters, function(i, val){
-      game.quis.answerPool.push(parseInt(game.multiplier) * parseInt(val));
-      if(game.quis.answerPool.length == 8){
-          return false;
-      }
-    });    
-    game.shuffle(game.quis.answerPool);   
-  }
-
-  game.getQuis = function(level) {
-    game.generateGameQuestion(level);
-    return game.quis;
-  }
-
-  return game;
-})
-
 .factory('Question', function() {
   question = {};
   question.answerPool = [];
+  question.level = 1;
   
   question.shuffle = function(o) {
     for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -172,7 +136,6 @@ angular.module('starter.services', [])
     question.answerPool = question.shuffle(question.answerPool);
     return question;
   }
-
   return question;
 })
 
@@ -186,10 +149,7 @@ angular.module('starter.services', [])
   }
 
   pool.addQuestion = function() {
-    // reset questions
     pool.resetQuestions();
-
-    // add a question
     var counter = pool.getRandomCounter(1, 12);
     var q = Question.getNextQuestion(counter);
     pool.questions.push(q);
@@ -205,4 +165,27 @@ angular.module('starter.services', [])
   }
 
   return pool;
+})
+
+.factory('Level', function(){ 
+  level = {};
+
+  var level1 = {'counters':[1, 2, 5], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 1', 'value':'l1'};
+  var level2 = {'counters':[3, 10, 11], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 2', 'value':'l2'};
+  var level3 = {'counters':[4, 6, 7], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 3', 'value':'l3'};
+  var level4 = {'counters':[8, 9, 12], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 4', 'value':'l4'};
+
+  var level5 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 5', 'value':'l5'};
+  var level6 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 6', 'value':'l6'};
+
+  var level7 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 7', 'value':'l7'};
+  var level8 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 8', 'value':'l8'};
+
+  level.levels = [level1, level2, level3, level4, level5, level6, level7, level8];
+
+  level.getLevels = function() {
+    return level.levels;    
+  }
+
+  return level;
 });

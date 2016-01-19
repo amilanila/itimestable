@@ -23,6 +23,11 @@
 	margin-top: 10px;
 }
 
+.button-level {
+	width: 75px;	
+	margin: 2px;
+}
+
 .times-table .button-outline {
 	width: 100%;
 }	
@@ -30,13 +35,3 @@
 .times-table-learn {
 	padding: 5px;
 }
-
-.footer {
-    float:left;
-    width:33%;
-    height:100px;
-    min-width:50px;
-    background:#ff0000;
-    margin:1px;
-}
-
