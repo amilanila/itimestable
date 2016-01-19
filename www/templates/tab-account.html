@@ -4,11 +4,21 @@
  	  <div class="col">
  	  	<button class="button button-full" ng-click="getQuestions()">Start</button>
  	  	<div ng-repeat="quiz in questions track by $index">
- 	  		{{quiz.multiplier}} * {{quiz.currentCounter}} = {{quiz.correctAnswer}}<br/>
- 	  		<div ng-repeat="ans in quiz.answerPool track by $index">
- 	  			{{ans}},
- 	  		</div>
- 	  		{{}}
+ 	  		<div class="row">
+      			<h4>Question<h4>
+    		</div>
+    		<div class="row">
+		      	<button class="button button-outline button-calm button-practice-ques"><h3>{{quiz.multiplier}}</h3></button>
+		      	<h2> x </h2>
+		      	<button class="button button-outline button-calm button-practice-ques"><h3>{{quiz.currentCounter}}</h3></button>  
+		    </div>
+		    <hr /> 	  		
+		    <div class="row">      
+      			<h4>Select answer</h4>
+    		</div>
+			<div class="row">
+ 	  		    <button ng-repeat="ans in quiz.answerPool track by $index" class="button button-small button-counter button-energized button-practice-ans footer" ng-click="tryAnswer(ans, quiz.correctAnswer)"><h2>{{ans}}</h2></button>			  
+ 	  	  	</div> 	  	  	
  	  	</div> 	  	
  	  </div>  	
   	</div>
