@@ -98,4 +98,8 @@ angular.module('starter.controllers', [])
   $scope.getQuestions = function() {
     $scope.questions = Pool.getQuestions();    
   }
+
+  $scope.getLevelQuestions = function(lvl) {
+    $scope.questions = Level.getLevelQuestions(lvl);    
+  }
 });

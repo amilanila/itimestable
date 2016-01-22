@@ -2,9 +2,8 @@
   <ion-content>
   	<div class="row">
  	  <div class="col">
- 	  	<div class="row">Select Level</div>
  	  	<div>
- 	  		<button ng-repeat="level in levels" class="button button-royal button-level" value="{{level.value}}">{{level.name}}</button>
+ 	  		<button ng-repeat="level in levels" class="button button-royal button-level" value="{{level.value}}" ng-click="getLevelQuestions({{level.value}})">{{level.name}}</button>
  	  	</div>
  	  	<button class="button button-full" ng-click="getQuestions()">Start</button>
  	  	<div ng-repeat="quiz in questions track by $index">
