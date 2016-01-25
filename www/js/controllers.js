@@ -94,7 +94,7 @@ angular.module('starter.controllers', [])
 
 .controller('AccountCtrl', function($scope, $state, Pool, Level) {
   $scope.levels = Level.getLevels();
-  $scope.currentLevel = 0;
+  $scope.currentLevel = 0;  
   $scope.numberOfQuestionAskedInCurrentLevel = 0;
   $scope.questionNumber = 1;
   $scope.answerText = 'Select correct answer';
@@ -117,6 +117,11 @@ angular.module('starter.controllers', [])
     return $scope.numberOfQuestionAskedInCurrentLevel == $scope.currentLevel.quizLimit;
   }
 
+  $scope.goToNextLevel = function() {
+    $scope.numberOfQuestionAskedInCurrentLevel = 0;
+    $scope.getLevelQuestions(parseInt($scope.currentLevel.value) + 1);
+  }
+
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
       $scope.numberOfQuestionAskedInCurrentLevel++;
@@ -126,7 +131,7 @@ angular.module('starter.controllers', [])
         $scope.correct = 100;
         $scope.answerText = 'Go to next level';
       } else {
-        $scope.answerText = 'Go to next level';
+        $scope.answerText = 'Next question';
       }
       
       $scope.answeredCorrect = true;
@@ -143,6 +148,7 @@ angular.module('starter.controllers', [])
       $scope.answerText = 'Select correct answer';
 
       if($scope.isLastQuestionOfCurrentLevel()) {
+        $scope.goToNextLevel();
         return;
       }
       $scope.getLevelQuestions($scope.currentLevel.value);
