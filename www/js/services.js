@@ -201,6 +201,7 @@ angular.module('starter.services', [])
   }
 
   pool.getLevelQuestions = function(counters, possibleAnswers) {    
+    pool.resetQuestions();
     pool.addQuestionForLevel(counters, possibleAnswers);
     return pool.questions;
   }
