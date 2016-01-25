@@ -168,7 +168,6 @@ angular.module('starter.services', [])
 .factory('Pool', function(Question) {
   pool = {};
   pool.questions = [];
-  pool.questionNumber = 1;
 
   pool.getRandomCounter = function(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -212,16 +211,16 @@ angular.module('starter.services', [])
 .factory('Level', function(Pool){ 
   level = {};
 
-  var level1 = {'counters':[1, 2, 5], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 1', 'value':'0'};
-  var level2 = {'counters':[3, 10, 11], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 2', 'value':'1'};
-  var level3 = {'counters':[4, 6, 7], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 3', 'value':'2'};
-  var level4 = {'counters':[8, 9, 12], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 4', 'value':'3'};
+  var level1 = {'counters':[1, 2, 5], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 1', 'value':'0', 'quizLimit':3};
+  var level2 = {'counters':[3, 10, 11], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 2', 'value':'1', 'quizLimit':4};
+  var level3 = {'counters':[4, 6, 7], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 3', 'value':'2', 'quizLimit':5};
+  var level4 = {'counters':[8, 9, 12], 'answersAvailable':4, 'timeAvailable':15, 'name':'Level 4', 'value':'3', 'quizLimit':6};
 
-  var level5 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 5', 'value':'4'};
-  var level6 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 6', 'value':'5'};
+  var level5 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 5', 'value':'4', 'quizLimit':20};
+  var level6 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':10, 'name':'Level 6', 'value':'5', 'quizLimit':20};
 
-  var level7 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 7', 'value':'6'};
-  var level8 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 8', 'value':'7'};
+  var level7 = {'counters':[2, 3, 4, 5, 6], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 7', 'value':'6', 'quizLimit':20};
+  var level8 = {'counters':[7, 8, 9, 10, 12], 'answersAvailable':8, 'timeAvailable':5, 'name':'Level 8', 'value':'7', 'quizLimit':20};
 
   level.levels = [level1, level2, level3, level4, level5, level6, level7, level8];
 

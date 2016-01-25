@@ -92,14 +92,61 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, Pool, Level) {
+.controller('AccountCtrl', function($scope, $state, Pool, Level) {
   $scope.levels = Level.getLevels();
-  
+  $scope.currentLevel = 0;
+  $scope.numberOfQuestionAskedInCurrentLevel = 0;
+  $scope.questionNumber = 1;
+  $scope.answerText = 'Select correct answer';
+  $scope.correct = 0;
+
   $scope.getQuestions = function() {
     $scope.questions = Pool.getQuestions();    
   }
 
   $scope.getLevelQuestions = function(lvl) {
+    $scope.setCurrentLevel(lvl);
     $scope.questions = Level.getLevelQuestions(lvl);    
   }
+
+  $scope.setCurrentLevel = function(lvl) {
+    $scope.currentLevel = $scope.levels[lvl];
+  }
+
+  $scope.isLastQuestionOfCurrentLevel = function() {
+    return $scope.numberOfQuestionAskedInCurrentLevel == $scope.currentLevel.quizLimit;
+  }
+
+  $scope.tryAnswer = function(ans, ansCorrect) {
+    if(ans == ansCorrect){
+      $scope.numberOfQuestionAskedInCurrentLevel++;
+      $scope.correct = 1;
+      
+      if($scope.isLastQuestionOfCurrentLevel()) {
+        $scope.correct = 100;
+        $scope.answerText = 'Go to next level';
+      } else {
+        $scope.answerText = 'Go to next level';
+      }
+      
+      $scope.answeredCorrect = true;
+    } else {
+      $scope.correct = -1;
+      $scope.answerText = 'Try again';
+      $scope.answeredCorrect = false;
+    }
+  } 
+
+  $scope.nextQuestion = function() {
+    if($scope.answeredCorrect) {
+      $scope.correct = 0;
+      $scope.answerText = 'Select correct answer';
+
+      if($scope.isLastQuestionOfCurrentLevel()) {
+        return;
+      }
+      $scope.getLevelQuestions($scope.currentLevel.value);
+      $state.go($state.current, {}, {reload: true});  
+    }
+  } 
 });
