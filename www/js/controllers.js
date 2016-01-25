@@ -124,7 +124,7 @@ angular.module('starter.controllers', [])
 
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
-      $scope.numberOfQuestionAskedInCurrentLevel++;
+      //$scope.numberOfQuestionAskedInCurrentLevel++;      
       $scope.correct = 1;
       
       if($scope.isLastQuestionOfCurrentLevel()) {
@@ -144,6 +144,7 @@ angular.module('starter.controllers', [])
 
   $scope.nextQuestion = function() {
     if($scope.answeredCorrect) {
+      $scope.numberOfQuestionAskedInCurrentLevel++;      
       $scope.correct = 0;
       $scope.answerText = 'Select correct answer';
 
