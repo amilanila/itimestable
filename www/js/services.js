@@ -136,6 +136,32 @@ angular.module('starter.services', [])
     question.answerPool = question.shuffle(question.answerPool);
     return question;
   }
+
+  question.getNextQuestionWithSpecifiedNumberOfAnswers = function(counter, possibleAnswers) {
+    var self = this;
+    question.multiplier = counter;
+    question.counters = question.shuffle([1,2,3,4,5,6,7,8,9,10,11,12]);
+    var currentCounter = parseInt(question.counters[0]);
+
+    question.correctAnswer = parseInt(question.multiplier) * parseInt(currentCounter);
+    question.currentCounter = currentCounter;
+
+    question.answerPool = [];
+    question.answerPool.push(question.correctAnswer);
+
+    $.each(question.counters, function(i, val){
+      var possibleAnswer = parseInt(question.multiplier) * parseInt(val);
+      if(possibleAnswer != question.correctAnswer){
+        question.answerPool.push(possibleAnswer);  
+      }  
+      if (i == possibleAnswers - 1) {
+        return false;
+      }
+    });
+    question.answerPool = question.shuffle(question.answerPool);
+    return question;
+  }
+
   return question;
 })
 
@@ -148,6 +174,10 @@ angular.module('starter.services', [])
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  pool.getCounterFromGivenCounters = function(counters) {
+    return counters[Math.floor(Math.random() * counters.length)];
+  }
+
   pool.addQuestion = function() {
     pool.resetQuestions();
     var counter = pool.getRandomCounter(1, 12);
@@ -156,8 +186,8 @@ angular.module('starter.services', [])
   }
 
   pool.addQuestionForLevel = function(counters, possibleAnswers) {
-    var counter = pool.getRandomCounter(1, 12);
-    var q = Question.getNextQuestion(counter);
+    var counter = pool.getCounterFromGivenCounters(counters);
+    var q = Question.getNextQuestionWithSpecifiedNumberOfAnswers(counter, possibleAnswers);
     pool.questions.push(q);
   }
 
