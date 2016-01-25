@@ -118,6 +118,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.goToNextLevel = function() {
+    $scope.currentLevel.completed = true;
     $scope.numberOfQuestionAskedInCurrentLevel = 0;
     $scope.getLevelQuestions(parseInt($scope.currentLevel.value) + 1);
   }

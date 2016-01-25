@@ -4,7 +4,8 @@
  	  <div class="col">
  	  	<div>
  	  		<button ng-repeat="level in levels" ng-class="{'button button-calm button-level': (level.value == currentLevel.value),
- 	  		                                               'button button-royal button-level': (level.value != currentLevel.value)}" 
+ 	  		                                               'button button-royal button-level': (level.value != currentLevel.value && !level.completed),
+ 	  		                                               'button button-balanced button-level': (level.value != currentLevel.value && level.completed)}" 
  	  		                                               value="{{level.value}}" ng-click="getLevelQuestions({{level.value}})">{{level.name}}</button>
  	  	</div>
  	  	<div ng-repeat="quiz in questions track by $index">
