@@ -92,7 +92,7 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('AccountCtrl', function($scope, $state, Pool, Level) {
+.controller('AccountCtrl', function($scope, $state, $timeout, Pool, Level) {
   $scope.levels = Level.getLevels();
   $scope.currentLevel = 0;  
   $scope.numberOfQuestionAskedInCurrentLevel = 0;
@@ -100,28 +100,37 @@ angular.module('starter.controllers', [])
   $scope.answerText = 'Select correct answer';
   $scope.correct = 0;
 
+  $scope.resetQuestions = function() {
+    $scope.questions = [];
+    $scope.timeout = true;
+  };
+
   $scope.getQuestions = function() {
+    $scope.timeout = false;
     $scope.questions = Pool.getQuestions();    
-  }
+  };
 
   $scope.getLevelQuestions = function(lvl) {
+    $scope.timeout = false;
     $scope.setCurrentLevel(lvl);
-    $scope.questions = Level.getLevelQuestions(lvl);    
-  }
+    $scope.questions = Level.getLevelQuestions(lvl);  
+    $scope.resetTimer();
+    $scope.startTimer($scope.currentLevel.timeAvailable);
+  };
 
   $scope.setCurrentLevel = function(lvl) {
     $scope.currentLevel = $scope.levels[lvl];
-  }
+  };
 
   $scope.isLastQuestionOfCurrentLevel = function() {
     return $scope.numberOfQuestionAskedInCurrentLevel == $scope.currentLevel.quizLimit;
-  }
+  };
 
   $scope.goToNextLevel = function() {
     $scope.currentLevel.completed = true;
     $scope.numberOfQuestionAskedInCurrentLevel = 0;
     $scope.getLevelQuestions(parseInt($scope.currentLevel.value) + 1);
-  }
+  };
 
   $scope.tryAnswer = function(ans, ansCorrect) {
     if(ans == ansCorrect){
@@ -141,7 +150,7 @@ angular.module('starter.controllers', [])
       $scope.answerText = 'Try again';
       $scope.answeredCorrect = false;
     }
-  } 
+  }; 
 
   $scope.nextQuestion = function() {
     if($scope.answeredCorrect) {
@@ -156,5 +165,68 @@ angular.module('starter.controllers', [])
       $scope.getLevelQuestions($scope.currentLevel.value);
       $state.go($state.current, {}, {reload: true});  
     }
-  } 
+  };
+
+  // Timer functions
+  var mytimeout = null; // the current timeoutID
+
+  // actual timer method, counts down every second, stops on zero
+  $scope.onTimeout = function() {
+    if ($scope.timer === 0) {
+      $scope.$broadcast('timer-stopped', 0);
+      $timeout.cancel(mytimeout);
+      return;
+    }
+    $scope.timer--;
+    mytimeout = $timeout($scope.onTimeout, 1000);
+  };
+
+  // functions to control the timer
+  // starts the timer
+  $scope.startTimer = function(timeAvailable) {
+    $scope.selectTimer(timeAvailable);
+    mytimeout = $timeout($scope.onTimeout, 1000);
+    $scope.started = true;
+  };
+
+  $scope.resetTimer = function() {
+    $timeout.cancel(mytimeout);
+  };
+
+  // // stops and resets the current timer
+  // $scope.stopTimer = function(closingModal) {
+  //   if (closingModal != true) {
+  //     $scope.$broadcast('timer-stopped', $scope.timer);
+  //   }
+  //   $scope.timer = $scope.timeForTimer;
+  //   $scope.started = false;
+  //   $scope.paused = false;
+  //   $timeout.cancel(mytimeout);
+  // };
+
+  // // pauses the timer
+  // $scope.pauseTimer = function() {
+  //   $scope.$broadcast('timer-stopped', $scope.timer);
+  //   $scope.started = false;
+  //   $scope.paused = true;
+  //   $timeout.cancel(mytimeout);
+  // };
+
+  // triggered, when the timer stops, you can do something here, maybe show a visual indicator or vibrate the device
+  $scope.$on('timer-stopped', function(event, remaining) {
+    if (remaining === 0) {
+      $scope.done = true;
+      $scope.resetQuestions();
+    }
+  });
+
+  // UI
+  // When you press a timer button this function is called
+  $scope.selectTimer = function(val) {
+    $scope.timeForTimer = val;
+    $scope.timer = val
+    $scope.started = false;
+    $scope.paused = false;
+    $scope.done = false;
+  };
 });

@@ -35,3 +35,7 @@
 .times-table-learn {
 	padding: 5px;
 }
+
+.timeout-message {
+	color: #ffa500;	
+}

@@ -19,7 +19,12 @@
 		    </div>
 		    <hr /> 	  		
 		    <div class="row">      
-      			<h5>Select answer</h5>
+		    	<div class="col">
+		    		<h5>Select answer</h5>
+		    	</div>
+		    	<div class="col">
+		    		<h6>Time remain: {{timer}}</h6>			    		
+		    	</div>
     		</div>
 			<div>
  	  		    <button ng-repeat="ans in quiz.answerPool track by $index" class="button button-small button-counter button-energized button-practice-ans" ng-click="tryAnswer(ans, quiz.correctAnswer)"><h2>{{ans}}</h2></button>			  
@@ -33,7 +38,12 @@
 		      </div>
 		    </div>
  	  	</div> 	  	
- 	  </div>  	
+	    <div class="row">
+	    	<div class="col">
+	    		<h4 ng-show="timeout == true" class="timeout-message">You have taken more than expected. Try again.</h4>
+	    	</div>
+	    </div> 	  	
+ 	  </div>  
   	</div>
   </ion-content>
 </ion-view>
